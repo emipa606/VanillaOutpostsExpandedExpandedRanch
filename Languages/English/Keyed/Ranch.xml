@@ -1,13 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-	<Outposts.Settings.Leather>Leather Multiplier</Outposts.Settings.Leather>
-	<Outposts.Settings.Meat>Meat Multiplier</Outposts.Settings.Meat>
-	<Outposts.Settings.Milk>Milk Multiplier</Outposts.Settings.Milk>
-	<Outposts.Settings.Wool>Wool Multiplier</Outposts.Settings.Wool>
-	<Outposts.Settings.Egg>Egg Multiplier</Outposts.Settings.Egg>
-	<Outposts.Settings.OtherProduct>Other Animal Product Multiplier</Outposts.Settings.OtherProduct>
-	<Outposts.Settings.Count>Herd Count Multiplier</Outposts.Settings.Count>
-	<Outposts.Settings.HungerRate>Hunger Rate Importance</Outposts.Settings.HungerRate>
-	<Outposts.Settings.BodySize>Body Size Importance</Outposts.Settings.BodySize>
-
+  <Outposts.Settings.Leather>Leather Multiplier</Outposts.Settings.Leather>
+  <Outposts.Settings.Meat>Meat Multiplier</Outposts.Settings.Meat>
+  <Outposts.Settings.Milk>Milk Multiplier</Outposts.Settings.Milk>
+  <Outposts.Settings.Wool>Wool Multiplier</Outposts.Settings.Wool>
+  <Outposts.Settings.Egg>Egg Multiplier</Outposts.Settings.Egg>
+  <Outposts.Settings.OtherProduct>Other Animal Product Multiplier</Outposts.Settings.OtherProduct>
+  <Outposts.Settings.Count>Herd Count Multiplier</Outposts.Settings.Count>
+  <Outposts.Settings.HungerRate>Hunger Rate Importance</Outposts.Settings.HungerRate>
+  <Outposts.Settings.BodySize>Body Size Importance</Outposts.Settings.BodySize>
+  <VOEE.Ranch.Moses>You need one male and one female of the animal you wish to raise</VOEE.Ranch.Moses>
+  <VOEE.Ranch.HerdSize>Current herd size: {0}</VOEE.Ranch.HerdSize>
+  <VOEE.Ranch.MaxHerdSize>Maximum herd size: {0}</VOEE.Ranch.MaxHerdSize>
 </LanguageData>

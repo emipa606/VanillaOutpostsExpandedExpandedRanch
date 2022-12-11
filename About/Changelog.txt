@@ -1,0 +1,8 @@
+# Changelog for VanillaOutpostsExpandedExpandedRanch
+
+1.4.2 - Fixed the git-history
+
+
+1.4.1 - Updated to 1.4, fixed 0-spawn chance.
+Used DeepL to update translations for ChineseSimplified, French, German, Russian
+
