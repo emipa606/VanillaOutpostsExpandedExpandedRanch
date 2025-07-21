@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AnimalBehaviours;
 using Outposts;
 using RimWorld;
+using VEF.AnimalBehaviours;
 using Verse;
 
 namespace VOEE;
@@ -56,9 +56,9 @@ public class Outpost_Ranching : Outpost_ChooseResult
                 return [];
             }
 
-            var outy = new List<ResultOption>
+            var resultOptions = new List<ResultOption>
             {
-                new ResultOption
+                new()
                 {
                     Thing = race.leatherDef ?? ThingDefOf.Leather_Plain,
                     BaseAmount = Math.Max((int)(ProductionMultiplier * Leather *
@@ -83,7 +83,7 @@ public class Outpost_Ranching : Outpost_ChooseResult
                                                           .hatcherDaystoHatch)) +
                                                  (race.lifeStageAges.Last().minAge * 60))), 1)
                 },
-                new ResultOption
+                new()
                 {
                     Thing = race.meatDef ?? ThingDefOf.Cow.race.meatDef ?? ThingDefOf.Meat_Human,
                     BaseAmount = Math.Max((int)(ProductionMultiplier * Meat *
@@ -108,67 +108,70 @@ public class Outpost_Ranching : Outpost_ChooseResult
                                                  (race.lifeStageAges.Last().minAge * 60))), 1)
                 }
             };
-            var milkies = resultOption.Thing.GetCompProperties<CompProperties_Milkable>();
-            if (milkies != null)
+            var milkable = resultOption.Thing.GetCompProperties<CompProperties_Milkable>();
+            if (milkable != null)
             {
-                outy.Add(
+                resultOptions.Add(
                     new ResultOption
                     {
-                        Thing = milkies.milkDef,
+                        Thing = milkable.milkDef,
                         BaseAmount = Math.Max((int)(ProductionMultiplier * Milk * resultOption.BaseAmount *
-                            (milkies.milkFemaleOnly ? 0.5 : 1) * milkies.milkAmount / milkies.milkIntervalDays * 15), 1)
+                                                    (milkable.milkFemaleOnly ? 0.5 : 1) * milkable.milkAmount /
+                                                    milkable.milkIntervalDays *
+                                                    15),
+                            1)
                     }
                 );
             }
 
-            var shearies = resultOption.Thing.GetCompProperties<CompProperties_Shearable>();
-            if (shearies != null)
+            var shearable = resultOption.Thing.GetCompProperties<CompProperties_Shearable>();
+            if (shearable != null)
             {
-                outy.Add(
+                resultOptions.Add(
                     new ResultOption
                     {
-                        Thing = shearies.woolDef,
+                        Thing = shearable.woolDef,
                         BaseAmount = Math.Max((int)(ProductionMultiplier * Wool * resultOption.BaseAmount *
-                            shearies.woolAmount /
-                            shearies.shearIntervalDays * 15), 1)
+                            shearable.woolAmount /
+                            shearable.shearIntervalDays * 15), 1)
                     }
                 );
             }
 
-            var eggies = resultOption.Thing.GetCompProperties<CompProperties_EggLayer>();
-            if (eggies is { eggProgressUnfertilizedMax: 1 })
+            var eggLayer = resultOption.Thing.GetCompProperties<CompProperties_EggLayer>();
+            if (eggLayer is { eggProgressUnfertilizedMax: 1 })
             {
-                outy.Add(
+                resultOptions.Add(
                     new ResultOption
                     {
-                        Thing = eggies.eggUnfertilizedDef,
+                        Thing = eggLayer.eggUnfertilizedDef,
                         BaseAmount = Math.Max((int)(ProductionMultiplier * Egg * resultOption.BaseAmount *
-                            (eggies.eggLayFemaleOnly ? 0.5 : 1) * eggies.eggCountRange.Average /
-                            eggies.eggLayIntervalDays * 15), 1)
+                            (eggLayer.eggLayFemaleOnly ? 0.5 : 1) * eggLayer.eggCountRange.Average /
+                            eggLayer.eggLayIntervalDays * 15), 1)
                     }
                 );
             }
 
-            var otheries = resultOption.Thing.GetCompProperties<CompProperties_AnimalProduct>();
-            if (otheries?.resourceDef != null)
+            var animalProduct = resultOption.Thing.GetCompProperties<CompProperties_AnimalProduct>();
+            if (animalProduct?.resourceDef != null)
             {
-                outy.Add(
+                resultOptions.Add(
                     new ResultOption
                     {
-                        Thing = otheries.resourceDef,
+                        Thing = animalProduct.resourceDef,
                         BaseAmount = Math.Max((int)(ProductionMultiplier * Other * resultOption.BaseAmount *
-                            otheries.resourceAmount / otheries.gatheringIntervalDays * 15), 1)
+                            animalProduct.resourceAmount / animalProduct.gatheringIntervalDays * 15), 1)
                     }
                 );
             }
 
-            return outy;
+            return resultOptions;
         }
     }
 
     public override IEnumerable<ResultOption> GetExtraOptions()
     {
-        var AnimalsSkillTotal = CapablePawns.ToList().Sum(p => p.skills.GetSkill(SkillDefOf.Animals).Level);
+        var animalsSkillTotal = CapablePawns.ToList().Sum(p => p.skills.GetSkill(SkillDefOf.Animals).Level);
         return from pkd in from pkd in DefDatabase<PawnKindDef>.AllDefs
                 where pkd.race?.tradeTags != null && pkd.race.tradeTags.Contains("AnimalFarm") ||
                       pkd.label == "boomalope"
@@ -179,7 +182,7 @@ public class Outpost_Ranching : Outpost_ChooseResult
                 BaseAmount = Math.Max((int)Math.Ceiling(CountMultiplier /
                                                         ((HungerRate * pkd.race.race.baseHungerRate) +
                                                          (BodySize * pkd.race.race.baseBodySize)) *
-                                                        AnimalsSkillTotal), 1) //fuck rounding
+                                                        animalsSkillTotal), 1)
             };
     }
 }

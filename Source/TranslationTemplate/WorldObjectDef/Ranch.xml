@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  <!-- EN: ranch -->
+  <Outpost_Ranch.label>ranch</Outpost_Ranch.label>
+  <!-- EN: Places a temporary, autonomously-led camp that specializes in raising and butchering animals. Once an ample amount of meat, leather and animal products are collected, a delivery will be made at the outskirts of a faction's primary colony. -->
+  <Outpost_Ranch.description>Places a temporary, autonomously-led camp that specializes in raising and butchering animals. Once an ample amount of meat, leather and animal products are collected, a delivery will be made at the outskirts of a faction's primary colony.</Outpost_Ranch.description>
+  <!-- EN: Choose what animal to raise at this outpost -->
+  <Outpost_Ranch.modExtensions.0.ChooseDesc>Choose what animal to raise at this outpost</Outpost_Ranch.modExtensions.0.ChooseDesc>
+  <!-- EN: Animals {0} -->
+  <Outpost_Ranch.modExtensions.0.ChooseLabel>Animals {0}</Outpost_Ranch.modExtensions.0.ChooseLabel>
+</LanguageData>
