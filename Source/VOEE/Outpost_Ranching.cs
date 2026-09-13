@@ -173,8 +173,8 @@ public class Outpost_Ranching : Outpost_ChooseResult
     {
         var animalsSkillTotal = CapablePawns.ToList().Sum(p => p.skills.GetSkill(SkillDefOf.Animals).Level);
         return from pkd in from pkd in DefDatabase<PawnKindDef>.AllDefs
-                where pkd.race?.tradeTags != null && pkd.race.tradeTags.Contains("AnimalFarm") ||
-                      pkd.label == "boomalope"
+                where (pkd.race?.tradeTags != null && pkd.race.tradeTags.Contains("AnimalFarm")) ||
+                      pkd.defName == "Boomalope"
                 select pkd
             select new ResultOption
             {
