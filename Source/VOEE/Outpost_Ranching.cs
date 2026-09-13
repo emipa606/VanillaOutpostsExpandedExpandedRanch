@@ -50,62 +50,36 @@ public class Outpost_Ranching : Outpost_ChooseResult
                 return [];
             }
 
-            var race = resultOption.Thing.race;
+            var thing = resultOption.Thing;
+            var race = thing.race;
             if (race == null)
             {
                 return [];
             }
 
+            var offspringFactor = GetOffspringFactor(thing, race);
+            var growthDurationInDays = GetGrowthDurationInDays(thing, race);
             var resultOptions = new List<ResultOption>
             {
                 new()
                 {
                     Thing = race.leatherDef ?? ThingDefOf.Leather_Plain,
                     BaseAmount = Math.Max((int)(ProductionMultiplier * Leather *
-                                                resultOption.Thing.GetStatValueAbstract(StatDefOf.LeatherAmount) *
+                                                thing.GetStatValueAbstract(StatDefOf.LeatherAmount) *
                                                 resultOption.BaseAmount *
-                                                (resultOption.Thing.HasComp(typeof(CompEggLayer))
-                                                    ? resultOption.Thing.GetCompProperties<CompProperties_EggLayer>()
-                                                        .eggCountRange
-                                                        .Average
-                                                    : resultOption.Thing.race.litterSizeCurve == null
-                                                        ? 1
-                                                        : Rand.ByCurveAverage(resultOption.Thing.race
-                                                            .litterSizeCurve)) * 0.5 *
+                                                offspringFactor * 0.5 *
                                                 15 /
-                                                ((resultOption.Thing.race?.gestationPeriodDays ??
-                                                  (resultOption.Thing.GetCompProperties<CompProperties_EggLayer>() ==
-                                                   null
-                                                      ? 0
-                                                      : resultOption.Thing.GetCompProperties<CompProperties_EggLayer>()
-                                                          .eggFertilizedDef
-                                                          .GetCompProperties<CompProperties_Hatcher>()
-                                                          .hatcherDaystoHatch)) +
-                                                 (race.lifeStageAges.Last().minAge * 60))), 1)
+                                                growthDurationInDays), 1)
                 },
                 new()
                 {
                     Thing = race.meatDef ?? ThingDefOf.Cow.race.meatDef ?? ThingDefOf.Meat_Human,
                     BaseAmount = Math.Max((int)(ProductionMultiplier * Meat *
-                                                resultOption.Thing.GetStatValueAbstract(StatDefOf.MeatAmount) *
+                                                thing.GetStatValueAbstract(StatDefOf.MeatAmount) *
                                                 resultOption.BaseAmount *
-                                                (resultOption.Thing.HasComp(typeof(CompEggLayer))
-                                                    ? resultOption.Thing.GetCompProperties<CompProperties_EggLayer>()
-                                                        .eggCountRange
-                                                        .Average
-                                                    : race.litterSizeCurve == null
-                                                        ? 1
-                                                        : Rand.ByCurveAverage(race.litterSizeCurve)) * 0.5 *
+                                                offspringFactor * 0.5 *
                                                 15 /
-                                                ((resultOption.Thing.race?.gestationPeriodDays ??
-                                                  (resultOption.Thing.GetCompProperties<CompProperties_EggLayer>() ==
-                                                   null
-                                                      ? 0
-                                                      : resultOption.Thing.GetCompProperties<CompProperties_EggLayer>()
-                                                          .eggFertilizedDef
-                                                          .GetCompProperties<CompProperties_Hatcher>()
-                                                          .hatcherDaystoHatch)) +
-                                                 (race.lifeStageAges.Last().minAge * 60))), 1)
+                                                growthDurationInDays), 1)
                 }
             };
             var milkable = resultOption.Thing.GetCompProperties<CompProperties_Milkable>();
@@ -171,18 +145,49 @@ public class Outpost_Ranching : Outpost_ChooseResult
 
     public override IEnumerable<ResultOption> GetExtraOptions()
     {
-        var animalsSkillTotal = CapablePawns.ToList().Sum(p => p.skills.GetSkill(SkillDefOf.Animals).Level);
-        return from pkd in from pkd in DefDatabase<PawnKindDef>.AllDefs
-                where (pkd.race?.tradeTags != null && pkd.race.tradeTags.Contains("AnimalFarm")) ||
-                      pkd.defName == "Boomalope"
-                select pkd
-            select new ResultOption
+        var animalsSkillTotal = CapablePawns.Sum(p => p.skills.GetSkill(SkillDefOf.Animals).Level);
+        return DefDatabase<PawnKindDef>.AllDefs
+            .Where(pkd => pkd.race?.tradeTags != null && pkd.race.tradeTags.Contains("AnimalFarm") ||
+                          pkd.defName == "Boomalope")
+            .Select(pkd => new ResultOption
             {
                 Thing = pkd.race,
                 BaseAmount = Math.Max((int)Math.Ceiling(CountMultiplier /
                                                         ((HungerRate * pkd.race.race.baseHungerRate) +
                                                          (BodySize * pkd.race.race.baseBodySize)) *
                                                         animalsSkillTotal), 1)
-            };
+            });
+    }
+
+    private static float GetOffspringFactor(ThingDef thing, RaceProperties race)
+    {
+        var eggLayer = thing.GetCompProperties<CompProperties_EggLayer>();
+        if (eggLayer != null)
+        {
+            return eggLayer.eggCountRange.Average;
+        }
+
+        return race.litterSizeCurve == null ? 1f : Rand.ByCurveAverage(race.litterSizeCurve);
+    }
+
+    private static float GetGrowthDurationInDays(ThingDef thing, RaceProperties race)
+    {
+        var eggLayer = thing.GetCompProperties<CompProperties_EggLayer>();
+        var gestationOrHatchingDays = race?.gestationPeriodDays ??
+                                      (eggLayer == null
+                                          ? 0f
+                                          : eggLayer.eggFertilizedDef
+                                              .GetCompProperties<CompProperties_Hatcher>()
+                                              .hatcherDaystoHatch);
+
+        var lifeStageAges = race?.lifeStageAges;
+        if (lifeStageAges == null)
+        {
+            return gestationOrHatchingDays;
+        }
+
+        var adulthoodDays = lifeStageAges[^1].minAge * 60f;
+
+        return gestationOrHatchingDays + adulthoodDays;
     }
 }

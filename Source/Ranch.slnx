@@ -6,4 +6,16 @@
     <BuildType Name="Release" />
   </Configurations>
   <Project Path="VOEE/Ranch.csproj" />
+  <Folder Name="/XML/About/">
+    <File Path="../About/about.xml" />
+  </Folder>
+  <Folder Name="/XML/1.6/Defs/WorldObjectDefs/">
+    <File Path="../1.6/Defs/WorldObjectDefs/Ranch.xml" />
+  </Folder>
+  <Folder Name="/XML/1.6/Defs/Structures/">
+    <File Path="../1.6/Defs/Structures/Outpost_Structure_Ranch.xml" />
+  </Folder>
+  <Folder Name="/XML/Languages/English/Keyed/">
+    <File Path="../Languages/English/Keyed/Ranch.xml" />
+  </Folder>
 </Solution>

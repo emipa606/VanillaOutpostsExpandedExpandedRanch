@@ -1,15 +1,15 @@
 # [Vanilla Outposts Expanded Expanded: Ranch (Continued)](https://steamcommunity.com/sharedfiles/filedetails/?id=2900645347)
 
-![Image](https://i.imgur.com/buuPQel.png)
+![Image](https://img.litet.net/logos/Info.png)
 
 Update of Clown Cats mod
 https://steamcommunity.com/sharedfiles/filedetails/?id=2797007124
 
 Animals to be ranched must have the trade-tag AnimalFarm, except for Boomalopes. 
 
-![Image](https://i.imgur.com/pufA0kM.png)
+![Image](https://img.litet.net/logos/Notice.png)
 	
-![Image](https://i.imgur.com/Z4GOv8H.png)
+![Image](https://img.litet.net/logos/OriginalDescription.png)
 
 # Ranch Outpost:
 
@@ -26,13 +26,13 @@ This mod is meant to be used alongside Vanilla Outposts Expanded but its not req
 If you had been using this mod before it was update you have 2 options, either destroy the site using dev mode or use the older version which can be found here https://github.com/spessbro/VOEE_Ranch/releases/tag/old_ranch 
 If you decide to choose the latter please do not report any bugs as it is not and wont be maintained in the future.
 	
-![Image](https://i.imgur.com/PwoNOj4.png)
+![Image](https://img.litet.net/logos/ReportingIssues.png)
 
 
 
 -  See if the the error persists if you just have this mod and its requirements active.
 -  If not, try adding your other mods until it happens again.
--  Post your error-log using the [Log Uploader](https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404) or the standalone [Uploader](https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404) and command Ctrl+F12
+-  Always post your log using the [Log Uploader](https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404)
 -  For best support, please use the Discord-channel for error-reporting.
 -  Do not report errors by making a discussion-thread, I get no notification of that.
 -  If you have the solution for a problem, please post it to the GitHub repository.
@@ -40,4 +40,4 @@ If you decide to choose the latter please do not report any bugs as it is not an
 
  
 
-[![Image](https://img.shields.io/github/v/release/emipa606/VanillaOutpostsExpandedExpandedRanch?label=latest%20version&style=plastic&color=9f1111&labelColor=black)](https://steamcommunity.com/sharedfiles/filedetails/changelog/2900645347) | tags:  animal farming
+[![Image](https://img.shields.io/github/v/release/emipa606/VanillaOutpostsExpandedExpandedRanch?label=latest%20version&style=plastic&color=9f1111&labelColor=black)](https://steamcommunity.com/sharedfiles/filedetails/changelog/2900645347) | animal farming
