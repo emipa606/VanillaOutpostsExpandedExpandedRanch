@@ -1,56 +1,85 @@
-# GitHub Copilot Instructions for Vanilla Outposts Expanded Expanded: Ranch (Continued)
-
-Welcome to the development guide for "Vanilla Outposts Expanded Expanded: Ranch (Continued)". This file serves as an instructional manual for utilizing GitHub Copilot efficiently within this RimWorld modding project. 
+# GitHub Copilot Instructions for Vanilla Outposts Expanded Expanded: Ranch (Continued) Mod
 
 ## Mod Overview and Purpose
 
-Vanilla Outposts Expanded Expanded: Ranch (Continued) is an enhancement of the original Vanilla Outposts Expanded mods, specifically focusing on creating ranch outposts. These outposts are temporary, autonomously-led camps specialized in raising and butchering animals to produce meat, leather, and other valuable animal products like ChemfuelMilk and Eggs.
-
-### Key Purpose:
-- To automate the process of animal farming and product gathering within RimWorld, enhancing gameplay with minimal player intervention.
-- To be compatible with Vanilla Outposts Expanded, though it can function independently.
+**Vanilla Outposts Expanded Expanded: Ranch (Continued)** is a mod for RimWorld that updates the original Clown Cats mod. This mod adds the ability to create Ranch Outposts, which are temporary, autonomously-led camps specialized in raising and butchering animals. The mod allows players to raise a variety of animals, collect their products, and cull older animals when necessary.
 
 ## Key Features and Systems
 
-- **Ranch Outpost Creation**: Players can create a caravan with a male and female animal, along with a capable pawn to establish the outpost.
-- **Autonomous Animal Management**: Animals are raised, reproduce, and products are gathered automatically. Older animals are culled when necessary to produce resources.
-- **Customizable Multipliers**: Configurable options to adjust production rates and animal management rules.
-- **Compatibility and Mod Interaction**: Integrates seamlessly with existing outpost systems and allows raising non-graze animals with specific settings.
+- **Ranch Outpost**: A temporary outpost that specializes in raising and butchering animals.
+- **Animal Farming**: Animals with the trade-tag `AnimalFarm` can be raised, except for Boomalopes.
+- **Animal Products**: Players can collect products such as Chemfuel Milk, Eggs, meat, and leather.
+- **Culling System**: Older animals are culled based on their skills, producing additional products like elephant tusks and thrumbo horns.
+- **Configurable Multipliers**: Players can tweak various multipliers for the outpost.
+- **Non-Grazer Animals**: Option to raise animals that do not graze, which is off by default.
 
 ## Coding Patterns and Conventions
 
-- **C# Coding Standards**:
-  - Adherence to C# coding conventions with clear method naming, such as `GetExtraOptions` and `ResultOptions`.
-  - Use of comments to explain complex logic and code behavior.
-  - Efficient and readable code with optimized performance in mind (especially crucial in cycle-heavy processes like autonomous animal management).
-
-- **XML File Structure**:
-  - Use of clear, descriptive names for XML nodes and attributes.
-  - Ensuring XML def types like `WorldObjectDef` and `StructureLayoutDef` are accurately represented and linked to game functionalities.
+1. **Consistent Naming**: Use clear and descriptive names for classes, methods, and variables.
+2. **Code Organization**: Group related code together and separate concerns into different classes.
+3. **Documentation**: Comment your code where necessary, especially for complex logic or external dependencies.
+4. **Error Handling**: Implement robust error handling to ensure the mod does not break the game.
+5. **Testing**: Test your mod thoroughly to ensure it works as expected and does not conflict with other mods.
 
 ## XML Integration
 
-- **XML Defs**:
-  - The mod includes multiple XML files primarily for defining game elements such as structures (`Outpost_Structure_Ranch.xml`) and world objects (`Ranch.xml`).
+XML files are crucial for defining various aspects of the mod, such as structures and world objects. Here are some key XML files and their purposes:
 
-- **Structure and Content**:
-  - Each XML file should define necessary attributes and be formatted for both readability and functionality.
-  - Proper linking of XML with associated C# logic to allow seamless data flow and interaction.
+- **Outpost_Structure_Ranch.xml**: Defines the structure layout for the Ranch Outpost.
+- **Ranch.xml**: Defines the WorldObjectDef for the Ranch outpost.
+- **About.xml**: Contains metadata about the mod, including dependencies.
+- **TranslationTemplate/Ranch.xml**: Provides translation templates for the mod.
+
+### Example XML Snippet
+
+xml
+<StructureLayoutDef Name="Outpost_Structure_Ranch" Description="Ranch Outpost" Category="Outpost">
+    <Tags>
+        <li>Ranch</li>
+    </Tags>
+    <Layout>
+        <li>Structure_Ranch</li>
+    </Layout>
+</StructureLayoutDef>
+
 
 ## Harmony Patching
 
-- **Modifying Game Behavior**:
-  - Utilize Harmony for patching core game methods to introduce or alter behaviors, essential for modifying how outposts and animal management work.
-  - Follow best practices for Harmony use, such as non-invasive patching and avoiding conflicts with other mods.
+Harmony is used to patch existing RimWorld code to add new functionality or modify existing behavior. Here are some common patterns for Harmony patching:
+
+1. **Prefix Patch**: Executes before the original method.
+2. **Postfix Patch**: Executes after the original method.
+3. **Transpiler Patch**: Modifies the bytecode of the original method.
+
+### Example Harmony Patch
+
+csharp
+using HarmonyLib;
+using RimWorld;
+using System.Reflection;
+using UnityEngine;
+
+namespace VanillaOutpostsExpandedExpandedRanch
+{
+    [HarmonyPatch(typeof(Outpost), "Update")]
+    public static class Outpost_Update_Patch
+    {
+        public static void Postfix(Outpost __instance)
+        {
+            // Custom logic to update the Ranch outpost
+        }
+    }
+}
+
 
 ## Suggestions for Copilot
 
-- **Code Suggestions**: Encourage Copilot to suggest optimized C# patterns that are compatible with Harmony patches.
-- **XML Templates**: Leverage Copilot to generate XML templates for new def additions or adjustments.
-- **Documentation**: Use Copilot for drafting detailed method documentation and inline comments for better code understanding.
-- **Error Handling**: Suggest robust error handling patterns within C# to ensure stability across different game scenarios and mod configurations.
+1. **Provide Examples**: When asking Copilot for code snippets or examples, provide context and specific requirements.
+2. **Review Code**: Always review the generated code to ensure it aligns with the mod's coding patterns and conventions.
+3. **Test Thoroughly**: Before using generated code in the mod, thoroughly test it to ensure it works as expected and does not introduce bugs.
+4. **Documentation**: Use Copilot to generate or assist in writing documentation for your code, especially for complex logic or external dependencies.
 
-By following the above guidelines and utilizing these instructions in conjunction with GitHub Copilot, development and maintenance of the mod should become more streamlined and efficient.
+By following these guidelines, you can effectively use GitHub Copilot to enhance your mod development process for Vanilla Outposts Expanded Expanded: Ranch (Continued).
 
 ## Project Solution Guidelines
 - Relevant mod XML files are included as Solution Items under the solution folder named XML, these can be read and modified from within the solution.
@@ -64,4 +93,6 @@ By following the above guidelines and utilizing these instructions in conjunctio
 ## Hard rules (must follow)
 - Do NOT run commands that modify the repo (no git commit, git apply, dotnet format) unless explicitly asked.
 - Prefer minimal reads: read only the smallest code region needed (around the suspicious lines).
+- When mentioning SonarQube issues, automatically use the SonarQube MCP service to fetch and address issues instead of making inferred fixes without querying SonarQube first.
+- When mentioning the rimworld log, automatically use the Rimworld MCP service to fetch the log.
 

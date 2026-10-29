@@ -11,34 +11,34 @@ namespace VOEE;
 public class Outpost_Ranching : Outpost_ChooseResult
 {
     [PostToSetings("Outposts.Settings.BodySize", PostToSetingsAttribute.DrawMode.Percentage, 1f, 0.01f, 2f)]
-    public readonly float BodySize = 1f;
+    private readonly float BodySize = 1f;
 
     [PostToSetings("Outposts.Settings.Count", PostToSetingsAttribute.DrawMode.Percentage, 1f, 0.01f, 5f)]
-    public readonly float CountMultiplier = 1f;
+    private readonly float CountMultiplier = 1f;
 
     [PostToSetings("Outposts.Settings.Egg", PostToSetingsAttribute.DrawMode.Percentage, 0.5f, 0.01f, 2f)]
-    public readonly float Egg = 0.5f;
+    private readonly float Egg = 0.5f;
 
     [PostToSetings("Outposts.Settings.HungerRate", PostToSetingsAttribute.DrawMode.Percentage, 1f, 0.01f, 2f)]
-    public readonly float HungerRate = 1f;
+    private readonly float HungerRate = 1f;
 
     [PostToSetings("Outposts.Settings.Leather", PostToSetingsAttribute.DrawMode.Percentage, 0.5f, 0.01f, 2f)]
-    public readonly float Leather = 0.5f;
+    private readonly float Leather = 0.5f;
 
     [PostToSetings("Outposts.Settings.Meat", PostToSetingsAttribute.DrawMode.Percentage, 0.5f, 0.01f, 2f)]
-    public readonly float Meat = 0.5f;
+    private readonly float Meat = 0.5f;
 
     [PostToSetings("Outposts.Settings.Milk", PostToSetingsAttribute.DrawMode.Percentage, 0.5f, 0.01f, 2f)]
-    public readonly float Milk = 0.5f;
+    private readonly float Milk = 0.5f;
 
     [PostToSetings("Outposts.Settings.OtherProduct", PostToSetingsAttribute.DrawMode.Percentage, 0.5f, 0.01f, 2f)]
-    public readonly float Other = 0.5f;
+    private readonly float Other = 0.5f;
 
     [PostToSetings("Outposts.Settings.Production", PostToSetingsAttribute.DrawMode.Percentage, 0.5f, 0.01f, 5f)]
-    public readonly float ProductionMultiplier = 0.5f;
+    private readonly float ProductionMultiplier = 0.5f;
 
     [PostToSetings("Outposts.Settings.Wool", PostToSetingsAttribute.DrawMode.Percentage, 0.5f, 0.01f, 2f)]
-    public readonly float Wool = 0.5f;
+    private readonly float Wool = 0.5f;
 
     public override List<ResultOption> ResultOptions
     {
